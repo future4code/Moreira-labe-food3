@@ -8,7 +8,8 @@ import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import Search from "./pages/Search";
 import Signup from "./pages/SignUp";
-
+import EditarEndereco from "./pages/EditarEndereco";
+import EditarPerfil from "./pages/EditarPerfil";
 const RoutesApp = () => {
   return (
     <BrowserRouter>
@@ -21,7 +22,8 @@ const RoutesApp = () => {
         <Route path="/cart" element={<Cart />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/search" element={<Search />} />
-        <Route path="/editar" element={<Editar />} />
+        <Route path="/editar" element={<EditarPerfil />} />
+        <Route path="/editarEndereco" element={<EditarEndereco />} />
       </Routes>
     </BrowserRouter>
   );

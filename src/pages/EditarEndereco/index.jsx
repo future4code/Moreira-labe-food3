@@ -1,7 +1,7 @@
 import React from "react";
 
-const EditarPerfil = () => {
+const EditarEndereco = () => {
   return <div>Editar Perfil</div>;
 };
 
-export default EditarPerfil;
+export default EditarEndereco;
