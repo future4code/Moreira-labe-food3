@@ -4,10 +4,10 @@ import RoutesApp from './routes'
 
 function App() {
   return (
-    <div>
+    <>
       <GlobalStyled/>
       <RoutesApp />
-    </div>
+    </>
   );
 }
 
