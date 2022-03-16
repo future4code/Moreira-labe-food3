@@ -10,7 +10,7 @@ import Search from "./pages/Search";
 import Signup from "./pages/SignUp";
 import EditarEndereco from "./pages/EditarEndereco";
 import EditarPerfil from "./pages/EditarPerfil";
-import Menu from "./pages/RestauranteMenu/Menu";
+import Menu from "./pages/RestauranteMenu";
 const RoutesApp = () => {
   return (
     <BrowserRouter>
@@ -25,7 +25,7 @@ const RoutesApp = () => {
         <Route path="/search" element={<Search />} />
         <Route path="/editar" element={<EditarPerfil />} />
         <Route path="/editarEndereco" element={<EditarEndereco />} />
-        <Route path="/menu" element={<Menu />} />
+        <Route path="/menu/:id" element={<Menu />} />
       </Routes>
     </BrowserRouter>
   );
