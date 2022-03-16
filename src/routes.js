@@ -4,7 +4,7 @@ import Address from "./pages/Address";
 import Cart from "./pages/Cart";
 import Feed from "./pages/Feed";
 import Home from "./pages/Home";
-import Login from "./pages/Login";
+import Login from "./pages/Login/Login";
 import Profile from "./pages/Profile";
 import Search from "./pages/Search";
 import Signup from "./pages/SignUp";
