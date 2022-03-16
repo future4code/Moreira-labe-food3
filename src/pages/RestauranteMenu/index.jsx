@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { GlobalContext } from "../../Global/GlobalContext";
 import styled from "styled-components";
 
@@ -15,6 +15,7 @@ const Img = styled.img`
 
 const Menu = () => {
 
+  const navigate = useNavigate()
   const restaurantId = useParams()
 
   const {restaurantsDetails, setRestaurantsDetails} = useContext(GlobalContext)
@@ -41,11 +42,17 @@ const Menu = () => {
   useEffect(() => {
     GetRestaurantDetail()
   }, [])
-  return <div> <button>Voltar</button>
+  return <div> <button onClick={() => navigate(-1)}>Voltar</button>
     {restaurantsDetails.map(({id, category, description, name, price, photoUrl})=> {
     return <Main key={id}>
       <h2>{name}</h2> <Img src={photoUrl}/> <br/>
       <span>{category}</span> <button>Adicionar</button>
+      <select>
+        <option selected disabled>Quantidade</option>
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+      </select>
       <p>{description}</p>
       <p>R$ {price}</p>
       </Main>

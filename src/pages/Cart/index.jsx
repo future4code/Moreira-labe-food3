@@ -1,9 +1,19 @@
-import React from 'react'
-
+import React, { useContext } from 'react'
+import { Container } from './styled'
+//import { GlobalContext } from '../../Global/GlobalContext'
 
 const Address = () => {
+
+  
+
+  
+  
   return (
-    <div>Address</div>
+    <div>
+      <Container>
+        Carrinho
+      </Container>
+    </div>
   )
 }
 
