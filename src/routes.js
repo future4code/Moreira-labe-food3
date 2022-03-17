@@ -10,7 +10,7 @@ import Search from "./pages/Search";
 import Signup from "./pages/SignUp";
 import EditarEndereco from "./pages/EditarEndereco";
 import EditarPerfil from "./pages/EditarPerfil";
-import Menu from "./pages/RestauranteMenu/Menu";
+import Menu from "./pages/RestauranteMenu";
 import HistoricoDePedidos from "./pages/Historico/HistoricoPedidos";
 
 const RoutesApp = () => {
