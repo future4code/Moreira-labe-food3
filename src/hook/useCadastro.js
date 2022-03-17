@@ -1,7 +1,9 @@
 import axios from "axios";
-import { BaseUrl } from "../constants/constants";
+import { BaseUrl, token } from "../constants/constants";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 export const useCadastro = (url, body) => {
+  // const [hasAddress,setHasAddress]=useState()
   const navigate = useNavigate();
   const postCadastro = (cpfChar) => {
     console.log("cpf", cpfChar);
@@ -10,6 +12,8 @@ export const useCadastro = (url, body) => {
         .post(BaseUrl + url, body)
         .then((res) => {
           localStorage.setItem("token", res.data.token);
+          console.log("token request cadastro", res.data.token);
+        
           if (res.data.user.hasAddress === true) {
             navigate("/feed");
           } else {
@@ -32,5 +36,6 @@ export const useCadastro = (url, body) => {
       );
     }
   };
+    console.log("token addres cadas", token);
   return { postCadastro };
 };

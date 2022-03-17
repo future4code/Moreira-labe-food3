@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import useForm from "../../hook/useForm";
 import usePutChangeAddress from "../../hook/usePutChangeAddress";
 import { useNavigate } from "react-router-dom";
@@ -72,13 +71,10 @@ const Address = () => {
           value={form.complement}
           onChange={onChangeForm}
           placeholder="Complemento"
-          required
         />
         <button type="submit">Salvar</button>
       </form>
-      <Link to="/signup">
-        <button>Voltar</button>
-      </Link>
+      <button onClick={() => navigate(-1)}>Voltar</button>
     </div>
   );
 };
