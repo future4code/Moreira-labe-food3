@@ -1,7 +1,9 @@
 import React from "react";
 import useForm from "../../hook/useForm";
 import { useCadastro } from "../../hook/useCadastro";
+import { useNavigate } from "react-router-dom";
 const SignUp = () => {
+  const navigate = useNavigate();
   const { form, onChangeForm, clearForm } = useForm({
     name: "",
     email: "",
@@ -53,16 +55,9 @@ const SignUp = () => {
           placeholder="Senha"
           required
         />
-        {/* <input
-          type="password"
-          name={"confirmarSenha"}
-           value={form.confirmarSenha}
-          onChange={onChangeForm}
-          required
-          placeholder="Confirmar senha"
-        /> */}
         <button type="submit">Criar</button>
       </form>
+      <button onClick={() => navigate("/login")}>Login</button>
     </div>
   );
 };
