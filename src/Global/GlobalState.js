@@ -1,10 +1,8 @@
 import { GlobalContext } from "./GlobalContext";
 import React, { useState, useEffect } from "react";
 
-
-
 const GlobalState = (props) => {
-  const data = "Teste Home";
+
   const [restaurants, setRestaurants] = useState([])
   const [restaurantsDetails, setRestaurantsDetails] = useState([])
   const [cart, setCart] = useState([])
