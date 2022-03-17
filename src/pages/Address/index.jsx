@@ -1,8 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import useForm from "../../hook/useForm";
-import usePutChanges from "../../hook/usePutChanges";
+import usePutChangeAddress from "../../hook/usePutChangeAddress";
+import { useNavigate } from "react-router-dom";
 const Address = () => {
+  const navigate = useNavigate();
+  const goTo = () => {
+    navigate("/feed");
+  };
   const { form, onChangeForm, clearForm } = useForm({
     street: "",
     number: "",
@@ -16,7 +21,7 @@ const Address = () => {
     clearForm();
     putAddAddress();
   };
-  const { putAddAddress } = usePutChanges("rappi4A/address", form);
+  const { putAddAddress } = usePutChangeAddress("rappi4A/address", form, goTo);
   return (
     <div>
       <h2>Meu endereço</h2>
