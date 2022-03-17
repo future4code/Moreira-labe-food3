@@ -43,7 +43,8 @@ export default function AllCard(props) {
       }
       setCart(novoCarrinho)
       
-      console.log("cart",cart)
+      console.log("carte",cart)
+
     }  
     
 
