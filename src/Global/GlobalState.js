@@ -1,7 +1,6 @@
 import { GlobalContext } from "./GlobalContext";
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import axios from "axios";
+
 
 
 const GlobalState = (props) => {
@@ -10,13 +9,15 @@ const GlobalState = (props) => {
   const [restaurantsDetails, setRestaurantsDetails] = useState([])
   const [cart, setCart] = useState([])
   const [produtos, setProdutos] = useState([])
-  
+  const [profile, setProfile] = useState([])
+  const [address, SetAddress] = useState([])
   
   
   return (
-    <GlobalContext.Provider value={{data, restaurants, setRestaurants, restaurantsDetails, setRestaurantsDetails, cart, setCart, produtos, setProdutos}}>
+    <GlobalContext.Provider value={{profile, setProfile, address, SetAddress, data, restaurants, setRestaurants, restaurantsDetails, setRestaurantsDetails, cart, setCart, produtos, setProdutos}}>
       {props.children} 
     </GlobalContext.Provider>
   );
 };
+
 export default GlobalState;
