@@ -9,7 +9,7 @@ export const useCadastro = (url, body) => {
       axios
         .post(BaseUrl + url, body)
         .then((res) => {
-          // localStorage.setItem("token", res.data.token);
+          localStorage.setItem("token", res.data.token);
           if (res.data.user.hasAddress === true) {
             navigate("/feed");
           } else {

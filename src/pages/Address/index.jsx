@@ -1,9 +1,13 @@
-import axios from "axios";
 import React from "react";
-import { BaseUrl, header } from "../../constants/constants";
+import { Link } from "react-router-dom";
 import useForm from "../../hook/useForm";
+import usePutChangeAddress from "../../hook/usePutChangeAddress";
+import { useNavigate } from "react-router-dom";
 const Address = () => {
-  localStorage.getItem("token");
+  const navigate = useNavigate();
+  const goTo = () => {
+    navigate("/feed");
+  };
   const { form, onChangeForm, clearForm } = useForm({
     street: "",
     number: "",
@@ -15,17 +19,9 @@ const Address = () => {
   const onAddAddress = (e) => {
     e.preventDefault();
     clearForm();
+    putAddAddress();
   };
-  const addAddress = () => {
-    axios
-      .put(BaseUrl + "rappi4A/address", header)
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  const { putAddAddress } = usePutChangeAddress("rappi4A/address", form, goTo);
   return (
     <div>
       <h2>Meu endereço</h2>
@@ -35,7 +31,7 @@ const Address = () => {
           name={"street"}
           value={form.street}
           onChange={onChangeForm}
-          placeholder="Logradouro"
+          placeholder="Logradouro ou Rua"
           required
         />
         <input
@@ -80,6 +76,9 @@ const Address = () => {
         />
         <button type="submit">Salvar</button>
       </form>
+      <Link to="/signup">
+        <button>Voltar</button>
+      </Link>
     </div>
   );
 };
