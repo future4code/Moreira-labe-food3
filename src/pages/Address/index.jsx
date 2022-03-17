@@ -1,9 +1,8 @@
-import axios from "axios";
 import React from "react";
-import { BaseUrl, header } from "../../constants/constants";
+import { Link } from "react-router-dom";
 import useForm from "../../hook/useForm";
+import usePutChanges from "../../hook/usePutChanges";
 const Address = () => {
-  localStorage.getItem("token");
   const { form, onChangeForm, clearForm } = useForm({
     street: "",
     number: "",
@@ -15,17 +14,9 @@ const Address = () => {
   const onAddAddress = (e) => {
     e.preventDefault();
     clearForm();
+    putAddAddress();
   };
-  const addAddress = () => {
-    axios
-      .put(BaseUrl + "rappi4A/address", header)
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  const { putAddAddress } = usePutChanges("rappi4A/address", form);
   return (
     <div>
       <h2>Meu endereço</h2>
@@ -35,7 +26,7 @@ const Address = () => {
           name={"street"}
           value={form.street}
           onChange={onChangeForm}
-          placeholder="Logradouro"
+          placeholder="Logradouro ou Rua"
           required
         />
         <input
@@ -80,6 +71,9 @@ const Address = () => {
         />
         <button type="submit">Salvar</button>
       </form>
+      <Link to="/signup">
+        <button>Voltar</button>
+      </Link>
     </div>
   );
 };
