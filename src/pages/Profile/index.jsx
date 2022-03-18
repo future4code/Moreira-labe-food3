@@ -66,7 +66,7 @@ const Profile = () => {
       <Main>
         Endereço: {address.street} - Nº: {address.number}
       </Main>
-      <button onClick={() => navigate(-1)}>voltar</button>
+      <button onClick={() => navigate("/feed")}>voltar</button>
       <button onClick={() => navigate("/address")}>Editar Endereço</button>
       <button onClick={() => navigate("/editar")}>Editar Perfil</button>
     </div>
