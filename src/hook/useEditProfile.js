@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 export const useEditProfile = (url, body, clearForm) => {
   const navigate = useNavigate();
   const putEditProfile = (cpfChar) => {
-    // console.log("cpf", cpfChar);
     if (cpfChar.length === 11) {
       axios
         .put(BaseUrl + url, body, header)
