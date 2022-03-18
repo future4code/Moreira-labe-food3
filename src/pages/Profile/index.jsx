@@ -5,6 +5,7 @@ import { GlobalContext } from "../../Global/GlobalContext";
 import { header } from "../../constants/constants";
 import { useRequest } from "../../hook/useRequest";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 const Main = styled.div`
   box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
     rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
@@ -13,62 +14,66 @@ const Main = styled.div`
 `;
 
 const Profile = () => {
+  const [pedidos, setPedidos] = useState([]);
   const { profile, setProfile, address, SetAddress } =
     useContext(GlobalContext);
   const { data, getData } = useRequest("rappi4A/profile");
   const navigate = useNavigate();
-  // const { data1 } = useRequest("rappi4A/profile/address");
-  // SetAddress(data1);
-  // const GetProfile = () => {
-  //   // const token = localStorage.getItem("token");
-  //   axios
-  //     .get(
-  //       "https://us-central1-missao-newton.cloudfunctions.net/rappi4A/profile",
-  //       header
-  //     )
-  //     .then((res) => {
-  //       // console.log("perfil", res.data.user);
-  //       setProfile(res.data.user);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
-
   const GetFullAddress = () => {
-    // const token = localStorage.getItem("token");
-
     axios
       .get(
         "https://us-central1-missao-newton.cloudfunctions.net/rappi4A/profile/address",
         header
       )
       .then((res) => {
-        // console.log("endereço", res.data.address);
         SetAddress(res.data.address);
       })
       .catch((err) => {
         console.log(err);
       });
   };
-  setProfile(data.user);
   useEffect(() => {
-    // GetProfile();
-    // setProfile(data.user);
+    setProfile(data.user);
     getData();
     GetFullAddress();
-  }, []);
-  console.log(profile);
+  }, [pedidos]);
+
+  //histórico
+  useEffect(() => {
+    axios
+      .get(
+        "https://us-central1-missao-newton.cloudfunctions.net/rappi4A/orders/history",
+        header
+      )
+      .then((response) => {
+        setPedidos(response.data.orders);
+      })
+      .catch((error) => {
+        alert(error.response);
+      });
+  }, [data]);
+
+  const listaDePedidos = pedidos?.map((pedido) => {
+    return <p key={pedido.createdAt}>{pedido.restaurantName}</p>;
+  });
+
   return (
     <div>
+      <button onClick={() => navigate("/feed")}>voltar</button>
+      <button onClick={() => navigate("/address")}>Editar Endereço</button>
+      <button onClick={() => navigate("/editar")}>Editar Perfil</button>
       <Main>Usuário: {profile?.name}</Main>
       <Main>E-mail: {profile?.email}</Main>
       <Main>
         Endereço: {address.street} - Nº: {address.number}
       </Main>
-      <button onClick={() => navigate("/feed")}>voltar</button>
-      <button onClick={() => navigate("/address")}>Editar Endereço</button>
-      <button onClick={() => navigate("/editar")}>Editar Perfil</button>
+      <Main>
+        Histórico de pedidos:
+        <br />
+        {listaDePedidos.length > 0
+          ? listaDePedidos
+          : "Você ainda não fez nenhum pedido."}
+      </Main>
     </div>
   );
 };
