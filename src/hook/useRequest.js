@@ -9,7 +9,7 @@ export const useRequest = (path) => {
     try {
       const resp = await axios.get(BaseUrl + path, header);
       setData(resp.data);
-      // console.log(resp.data)
+      console.log(resp.data)
     } catch (err) {
       console.log(err);
     }
