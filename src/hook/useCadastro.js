@@ -1,11 +1,10 @@
 import axios from "axios";
 import { BaseUrl } from "../constants/constants";
 import { useNavigate } from "react-router-dom";
-import { GlobalContext } from "../Global/GlobalContext";
-import { useContext } from "react";
+
 export const useCadastro = (url, body) => {
   const navigate = useNavigate();
-  const { setHasAddress } = useContext(GlobalContext);
+
   const postCadastro = (cpfChar) => {
     console.log("cpf", cpfChar);
     if (cpfChar.length === 11) {
@@ -13,8 +12,8 @@ export const useCadastro = (url, body) => {
         .post(BaseUrl + url, body)
         .then((res) => {
           localStorage.setItem("token", res.data.token);
-          setHasAddress(res.data.user.hasAddress);
-          if (res.data.user.hasAddress === true) {
+          const hasAddress = res.data.user.hasAddress;
+          if (hasAddress === true) {
             navigate("/feed");
           } else {
             navigate("/address");

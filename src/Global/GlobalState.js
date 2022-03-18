@@ -8,7 +8,6 @@ const GlobalState = (props) => {
   const [produtos, setProdutos] = useState([]);
   const [profile, setProfile] = useState([]);
   const [address, SetAddress] = useState([]);
-  const [hasAddress, setHasAddress] = useState();
 
   return (
     <GlobalContext.Provider
@@ -25,8 +24,6 @@ const GlobalState = (props) => {
         setCart,
         produtos,
         setProdutos,
-        hasAddress,
-        setHasAddress,
       }}
     >
       {props.children}

@@ -2,8 +2,6 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { GlobalContext } from "../../Global/GlobalContext";
-import { useContext } from "react";
 const ContainerLogin = styled.div`
   margin: 144px auto;
   display: flex;
@@ -38,7 +36,6 @@ const Login = () => {
   const onChangeSenha = (event) => {
     setSenha(event.target.value);
   };
-  const { hasAddress } = useContext(GlobalContext);
 
   const onSubmitLogin = (event) => {
     event.preventDefault();
@@ -55,11 +52,14 @@ const Login = () => {
 
       .then((response) => {
         localStorage.setItem("token", response.data.token);
+        const hasAddress = response.data.user.hasAddress;
+
         if (hasAddress === true) {
           navigate("/feed");
           console.log(response.data);
         } else {
           navigate("/address");
+          console.log(response.data);
         }
       })
       .catch((error) => {

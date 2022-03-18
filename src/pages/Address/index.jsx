@@ -7,6 +7,9 @@ const Address = () => {
   const goTo = () => {
     navigate("/feed");
   };
+  const goBack = () => {
+    navigate(-1);
+  };
   const { form, onChangeForm, clearForm } = useForm({
     street: "",
     number: "",
@@ -20,7 +23,12 @@ const Address = () => {
     clearForm();
     putAddAddress();
   };
-  const { putAddAddress } = usePutChangeAddress("rappi4A/address", form, goTo);
+  const { putAddAddress } = usePutChangeAddress(
+    "rappi4A/address",
+    form,
+    goTo,
+    goBack
+  );
   return (
     <div>
       <h2>Meu endereço</h2>
