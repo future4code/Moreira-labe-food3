@@ -15,10 +15,13 @@ const Main = styled.div`
 
 const Profile = () => {
   const [pedidos, setPedidos] = useState([]);
-  const { profile, setProfile, address, SetAddress } =
-    useContext(GlobalContext);
+  
+  const { profile, setProfile, address, SetAddress } = useContext(GlobalContext);
+ 
   const { data, getData } = useRequest("rappi4A/profile");
+  
   const navigate = useNavigate();
+
   const GetFullAddress = () => {
     axios
       .get(
@@ -32,13 +35,14 @@ const Profile = () => {
         console.log(err);
       });
   };
+
   useEffect(() => {
     setProfile(data.user);
     getData();
     GetFullAddress();
   }, [pedidos]);
 
-  //histórico
+
   useEffect(() => {
     axios
       .get(
@@ -51,7 +55,7 @@ const Profile = () => {
       .catch((error) => {
         alert(error.response);
       });
-  }, [data]);
+  }, []);
 
   const listaDePedidos = pedidos?.map((pedido) => {
     return <p key={pedido.createdAt}>{pedido.restaurantName}</p>;
@@ -62,10 +66,17 @@ const Profile = () => {
       <button onClick={() => navigate("/feed")}>voltar</button>
       <button onClick={() => navigate("/address")}>Editar Endereço</button>
       <button onClick={() => navigate("/editar")}>Editar Perfil</button>
-      <Main>Usuário: {profile?.name}</Main>
-      <Main>E-mail: {profile?.email}</Main>
       <Main>
-        Endereço: {address.street} - Nº: {address.number}
+        <p>Usuário: {profile?.name}</p>
+        <p>E-mail: {profile?.email}</p>
+        <p>CPF: {profile?.cpf}</p>
+      </Main>
+      <Main>
+        <p>Rua: {address.street}</p>
+        <p>N° {address.number} - {address.complement}</p>
+        <p>Bairro: {address.neighbourhood}</p>
+        <p>Cidade: {address.city}</p>
+        <p>Estado: {address.state}</p>
       </Main>
       <Main>
         Histórico de pedidos:
@@ -79,3 +90,5 @@ const Profile = () => {
 };
 
 export default Profile;
+
+
