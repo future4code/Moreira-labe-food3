@@ -9,7 +9,7 @@ import Profile from "./pages/Profile";
 import Signup from "./pages/SignUp";
 import EditarPerfil from "./pages/EditarPerfil";
 import Menu from "./pages/RestauranteMenu";
-import HistoricoDePedidos from "./pages/Historico/HistoricoPedidos";
+import HistoricoDePedidos from "./pages/Historico";
 
 const RoutesApp = () => {
   return (

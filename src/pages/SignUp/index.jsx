@@ -2,6 +2,10 @@ import React from "react";
 import useForm from "../../hook/useForm";
 import { useCadastro } from "../../hook/useCadastro";
 import { useNavigate } from "react-router-dom";
+import Header from "../../components/Header";
+import { Container, H3, ContainerBut, ContainerLogin, Form, Input, Button, ButtonLogin } from "./styled";
+
+
 const SignUp = () => {
   const navigate = useNavigate();
   const { form, onChangeForm, clearForm } = useForm({
@@ -18,10 +22,12 @@ const SignUp = () => {
   };
 
   return (
-    <div>
-      <h2>Cadastro</h2>
-      <form onSubmit={onSignUp}>
-        <input
+    <>
+    <Header />
+    <Container>
+      <H3>Cadastro</H3>
+      <Form onSubmit={onSignUp}>
+        <Input
           type="text"
           name={"name"}
           value={form.name}
@@ -29,7 +35,7 @@ const SignUp = () => {
           placeholder="Nome"
           required
         />
-        <input
+        <Input
           type="email"
           name={"email"}
           value={form.email}
@@ -37,16 +43,16 @@ const SignUp = () => {
           placeholder="Email"
           required
         />
-        <input
+        <Input
           type="number"
           name={"cpf"}
           value={form.cpf}
           onChange={onChangeForm}
-          placeholder="CPF (somente números)"
+          placeholder="CPF"
           title="O CPF deve conter apenas 11 números, sem traços ou pontos."
           required
         />
-        <input
+        <Input
           type="password"
           name={"password"}
           value={form.password}
@@ -54,10 +60,17 @@ const SignUp = () => {
           placeholder="Senha"
           required
         />
-        <button type="submit">Criar</button>
-      </form>
-      <button onClick={() => navigate("/login")}>Login</button>
-    </div>
+        <ContainerBut>
+        <Button type="submit">Criar</Button>
+        </ContainerBut>
+      </Form>
+      <ContainerLogin>
+      <H3>Já possui uma conta?</H3>
+      <ButtonLogin onClick={() => navigate("/login")}>Login</ButtonLogin>
+      </ContainerLogin>
+    </Container>
+    </>
   );
 };
+
 export default SignUp;
