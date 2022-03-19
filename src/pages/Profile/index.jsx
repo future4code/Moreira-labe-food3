@@ -28,7 +28,7 @@ const Profile = () => {
     getData();
     getAdress();
   }, [pedidos]);
-  console.log(address);
+  // console.log(address);
 
   useEffect(() => {
     axios
