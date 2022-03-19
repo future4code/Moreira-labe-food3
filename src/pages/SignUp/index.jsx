@@ -10,11 +10,10 @@ const SignUp = () => {
     cpf: "",
     password: "",
   });
-  const { postCadastro } = useCadastro("rappi4A/signup", form);
+  const { postCadastro } = useCadastro("rappi4A/signup", form, clearForm);
   const onSignUp = (e) => {
     e.preventDefault();
-    e.persist();
-    clearForm();
+
     postCadastro(form.cpf);
   };
 

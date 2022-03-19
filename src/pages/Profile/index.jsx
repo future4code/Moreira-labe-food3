@@ -15,33 +15,20 @@ const Main = styled.div`
 
 const Profile = () => {
   const [pedidos, setPedidos] = useState([]);
-  
-  const { profile, setProfile, address, SetAddress } = useContext(GlobalContext);
- 
-  const { data, getData } = useRequest("rappi4A/profile");
-  
+
+  const { profile, setProfile, address, SetAddress } =
+    useContext(GlobalContext);
+
+  const [data, getData] = useRequest("rappi4A/profile");
+  const [addressProfile, getAdress] = useRequest("rappi4A/profile/address");
   const navigate = useNavigate();
-
-  const GetFullAddress = () => {
-    axios
-      .get(
-        "https://us-central1-missao-newton.cloudfunctions.net/rappi4A/profile/address",
-        header
-      )
-      .then((res) => {
-        SetAddress(res.data.address);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
   useEffect(() => {
+    SetAddress(addressProfile.address);
     setProfile(data.user);
     getData();
-    GetFullAddress();
+    getAdress();
   }, [pedidos]);
-
+  console.log(address);
 
   useEffect(() => {
     axios
@@ -55,7 +42,7 @@ const Profile = () => {
       .catch((error) => {
         alert(error.response);
       });
-  }, []);
+  }, [profile]);
 
   const listaDePedidos = pedidos?.map((pedido) => {
     return <p key={pedido.createdAt}>{pedido.restaurantName}</p>;
@@ -72,11 +59,13 @@ const Profile = () => {
         <p>CPF: {profile?.cpf}</p>
       </Main>
       <Main>
-        <p>Rua: {address.street}</p>
-        <p>N° {address.number} - {address.complement}</p>
-        <p>Bairro: {address.neighbourhood}</p>
-        <p>Cidade: {address.city}</p>
-        <p>Estado: {address.state}</p>
+        <p>Rua: {address?.street}</p>
+        <p>
+          N° {address?.number} - {address?.complement}
+        </p>
+        <p>Bairro: {address?.neighbourhood}</p>
+        <p>Cidade: {address?.city}</p>
+        <p>Estado: {address?.state}</p>
       </Main>
       <Main>
         Histórico de pedidos:
@@ -90,5 +79,3 @@ const Profile = () => {
 };
 
 export default Profile;
-
-

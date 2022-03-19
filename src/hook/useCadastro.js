@@ -2,7 +2,7 @@ import axios from "axios";
 import { BaseUrl } from "../constants/constants";
 import { useNavigate } from "react-router-dom";
 
-export const useCadastro = (url, body) => {
+export const useCadastro = (url, body, clearForm) => {
   const navigate = useNavigate();
 
   const postCadastro = (cpfChar) => {
@@ -13,6 +13,8 @@ export const useCadastro = (url, body) => {
         .then((res) => {
           localStorage.setItem("token", res.data.token);
           const hasAddress = res.data.user.hasAddress;
+          // console.log("okie", res.data);
+          clearForm();
           if (hasAddress === true) {
             navigate("/feed");
           } else {
