@@ -35,6 +35,7 @@ const Menu = () => {
     GetRestaurantDetail();
     // eslint-disable-next-line
   }, []);
+
   return (
     <div>
       <button onClick={() => navigate(-1)}>Voltar</button>

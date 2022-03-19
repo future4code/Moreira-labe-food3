@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useContext, useEffect } from "react";
 import styled from "styled-components";
 import { GlobalContext } from "../../Global/GlobalContext";
-import { header } from "../../constants/constants";
+import { BaseUrl, header } from "../../constants/constants";
 import { useRequest } from "../../hook/useRequest";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -20,9 +20,7 @@ const Profile = () => {
     useContext(GlobalContext);
 
   const [data, getData] = useRequest("rappi4A/profile");
-  const [addressProfile, getAdress] = useRequest(
-    "rappi4A/profile/address"
-  );
+  const [addressProfile, getAdress] = useRequest("rappi4A/profile/address");
   const navigate = useNavigate();
   useEffect(() => {
     SetAddress(addressProfile.address);
@@ -32,16 +30,11 @@ const Profile = () => {
     // eslint-disable-next-line
   }, [pedidos]);
 
-  // console.log(address);
-
   useEffect(() => {
     axios
-      .get(
-        "https://us-central1-missao-newton.cloudfunctions.net/rappi4A/orders/history",
-        header
-      )
-      .then((response) => {
-        setPedidos(response.data.orders);
+      .get(BaseUrl + "rappi4A/orders/history", header)
+      .then((res) => {
+        setPedidos(res.data.orders);
       })
       .catch((error) => {
         alert(error.response);

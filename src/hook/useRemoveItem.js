@@ -9,12 +9,12 @@ export default function useRemoveItem() {
     const verificaCarrinho = itemCarrinhos
       .map((item) => {
         if (produto.id === item.id) {
-          return { ...item, quantidade: item.quantidade - 1 };
+          return { ...item, quantity: item.quantity - 1 };
         }
 
         return item; //alert("seu item foi deletado");
       })
-      .filter((pedido) => pedido.quantidade > 0);
+      .filter((pedido) => pedido.quantity > 0);
     setCart(verificaCarrinho);
     localStorage.setItem("cart", JSON.stringify(itemCarrinhos));
   };
