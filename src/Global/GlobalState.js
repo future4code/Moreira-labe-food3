@@ -1,5 +1,5 @@
 import { GlobalContext } from "./GlobalContext";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 const GlobalState = (props) => {
   const [restaurants, setRestaurants] = useState([]);

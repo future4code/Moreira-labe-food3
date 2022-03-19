@@ -1,5 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
-import GlobalState from "../../Global/GlobalState";
+import React, { useContext, useEffect } from "react";
 import { Container } from "./styled";
 import { GlobalContext } from "../../Global/GlobalContext";
 import useRemoveItem from "../../hook/useRemoveItem";
