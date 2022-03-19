@@ -20,7 +20,8 @@ const HistoricoDePedidos = () => {
      }
 
      useEffect(() => {
-         getHistory()
+       getHistory();
+       // eslint-disable-next-line
      }, [])
 
      const listaDePedidos = pedidos.map((pedido) => {

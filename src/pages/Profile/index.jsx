@@ -20,14 +20,18 @@ const Profile = () => {
     useContext(GlobalContext);
 
   const [data, getData] = useRequest("rappi4A/profile");
-  const [addressProfile, getAdress] = useRequest("rappi4A/profile/address");
+  const [addressProfile, getAdress] = useRequest(
+    "rappi4A/profile/address"
+  );
   const navigate = useNavigate();
   useEffect(() => {
     SetAddress(addressProfile.address);
     setProfile(data.user);
     getData();
     getAdress();
+    // eslint-disable-next-line
   }, [pedidos]);
+
   // console.log(address);
 
   useEffect(() => {
@@ -53,27 +57,34 @@ const Profile = () => {
       <button onClick={() => navigate("/feed")}>voltar</button>
       <button onClick={() => navigate("/address")}>Editar Endereço</button>
       <button onClick={() => navigate("/editar")}>Editar Perfil</button>
-      <Main>
-        <p>Usuário: {profile?.name}</p>
-        <p>E-mail: {profile?.email}</p>
-        <p>CPF: {profile?.cpf}</p>
-      </Main>
-      <Main>
-        <p>Rua: {address?.street}</p>
-        <p>
-          N° {address?.number} - {address?.complement}
-        </p>
-        <p>Bairro: {address?.neighbourhood}</p>
-        <p>Cidade: {address?.city}</p>
-        <p>Estado: {address?.state}</p>
-      </Main>
-      <Main>
-        Histórico de pedidos:
-        <br />
-        {listaDePedidos.length > 0
-          ? listaDePedidos
-          : "Você ainda não fez nenhum pedido."}
-      </Main>
+
+      {profile && address ? (
+        <>
+          <Main>
+            <p>Usuário: {profile?.name}</p>
+            <p>E-mail: {profile?.email}</p>
+            <p>CPF: {profile?.cpf}</p>
+          </Main>
+          <Main>
+            <p>Rua: {address?.street}</p>
+            <p>
+              N° {address?.number} - {address?.complement}
+            </p>
+            <p>Bairro: {address?.neighbourhood}</p>
+            <p>Cidade: {address?.city}</p>
+            <p>Estado: {address?.state}</p>
+          </Main>
+          <Main>
+            Histórico de pedidos:
+            <br />
+            {listaDePedidos.length > 0
+              ? listaDePedidos
+              : "Você ainda não fez nenhum pedido."}
+          </Main>
+        </>
+      ) : (
+        <p>Carregando...</p>
+      )}
     </div>
   );
 };

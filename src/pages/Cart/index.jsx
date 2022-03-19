@@ -4,15 +4,16 @@ import { GlobalContext } from "../../Global/GlobalContext";
 import useRemoveItem from "../../hook/useRemoveItem";
 
 const Cart = () => {
-  const { cart } = useContext(GlobalContext);
+  const { cart, setCart } = useContext(GlobalContext);
   const removeDoCarrinho = useRemoveItem();
 
   // Recenbendo o cart do local storage
   const retrievedCart = localStorage.getItem("cart");
   const cartItems = JSON.parse(retrievedCart);
-  console.log(cart);
+
   const renderiza = () => {
     const listaCarrinho = cart?.map((pedido) => {
+      
       return (
         <div key={pedido.name}>
           <p>{pedido.name}</p>
@@ -36,18 +37,20 @@ const Cart = () => {
 
   useEffect(() => {
     renderiza();
+    // eslint-disable-next-line
   }, [cartItems]);
   console.log("cart", cart);
+
   const total = () => {
     let totalValue = 0;
 
     for (let product of cart) {
       totalValue += product.preco * Number(product.quantidade);
     }
-
     return totalValue.toFixed(2);
   };
-//oject a ser enviada na requesição de fazer pedido
+
+  //oject a ser enviada na requesição de fazer pedido
   //   a={
   // 	"products": [{
   // 		"id": "CnKdjU6CyKakQDGHzNln",
@@ -58,10 +61,15 @@ const Cart = () => {
   // 	}],
   // 	"paymentMethod": "creditcard"
   // }
+  const limparCarrinho = () => {
+    setCart([]);
+    alert(`O carrinho está vazio!`);
+  };
   return (
     <div>
-      <Container>{renderiza()}</Container>
-      <div>{total()}</div>
+      <button onClick={limparCarrinho}>Esvaziar carrinho</button>
+      <Container>{cart.length ? renderiza() : <p>Carrinho Vazio</p>}</Container>
+      <div>Total R$: {total()}</div>
       <div>
         <form>
           <input

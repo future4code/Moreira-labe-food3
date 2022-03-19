@@ -33,6 +33,7 @@ const Menu = () => {
 
   useEffect(() => {
     GetRestaurantDetail();
+    // eslint-disable-next-line
   }, []);
   return (
     <div>

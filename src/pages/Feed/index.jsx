@@ -40,9 +40,8 @@ const Feed = () => {
   }
 
   useEffect(() => {
-
-    GetRestaurants()
-    
+    GetRestaurants();
+    // eslint-disable-next-line
   }, [])
 
   return (
