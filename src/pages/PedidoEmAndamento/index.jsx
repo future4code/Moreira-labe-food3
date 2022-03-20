@@ -21,7 +21,7 @@ const PedidoEmAndamento = () => {
         <>
           <h2>Pedido em andamento:</h2>
           <h3>{orders?.restaurantName}</h3>
-          Subtotal: R$ {orders?.totalPrice}
+          Subtotal: R$ {orders?.totalPrice.toFixed(2)}
         </>
       ) : (
         <p>Você não possui pedidos em andamento</p>
