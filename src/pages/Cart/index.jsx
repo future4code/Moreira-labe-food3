@@ -4,9 +4,11 @@ import { GlobalContext } from "../../Global/GlobalContext";
 import useRemoveItem from "../../hook/useRemoveItem";
 import useForm from "../../hook/useForm";
 import { usePlaceOrder } from "../../hook/usePlaceOrder";
+import { HeaderPage } from "../../components/Header/HeaderPage";
+import useProtectedPage from "../../hook/useProtectedPage ";
 
 const Cart = () => {
-  
+  useProtectedPage()
   const { cart, setCart, restaurantId } = useContext(GlobalContext);
 
   const removeDoCarrinho = useRemoveItem();
@@ -56,8 +58,12 @@ const Cart = () => {
   //map para montar o body do place order
   const cartProdutos = cart?.map(({ id, quantity }) => ({ id, quantity }));
   //fazer pedido
-  const placeOrder = usePlaceOrder(cartProdutos, form.paymentMethod, restaurantId);
-   //limpar o carrinho
+  const placeOrder = usePlaceOrder(
+    cartProdutos,
+    form.paymentMethod,
+    restaurantId
+  );
+  //limpar o carrinho
   const limparCarrinho = () => {
     setCart([]);
     localStorage.removeItem("cart");
@@ -71,7 +77,9 @@ const Cart = () => {
 
   return (
     <div>
+      <HeaderPage />
       <button onClick={limparCarrinho}>Esvaziar carrinho</button>
+
       <Container>{cart.length ? renderiza() : <p>Carrinho Vazio</p>}</Container>
       <div>Total R$: {total()}</div>
       <div>

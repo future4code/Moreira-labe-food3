@@ -2,7 +2,9 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useEditProfile } from "../../hook/useEditProfile";
 import useForm from "../../hook/useForm";
+import useProtectedPage from "../../hook/useProtectedPage ";
 const EditarPerfil = () => {
+  useProtectedPage();
   const navigate = useNavigate();
   const { form, onChangeForm, clearForm } = useForm({
     name: "",

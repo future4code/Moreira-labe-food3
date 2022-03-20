@@ -4,7 +4,9 @@ import { useParams, useNavigate } from "react-router-dom";
 import { GlobalContext } from "../../Global/GlobalContext";
 import AllCard from "./AllCard";
 import { Link } from "react-router-dom";
+import useProtectedPage from "../../hook/useProtectedPage ";
 const Menu = () => {
+  useProtectedPage()
   const navigate = useNavigate();
   const restaurantId = useParams();
 

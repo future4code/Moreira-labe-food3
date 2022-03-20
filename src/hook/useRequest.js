@@ -10,14 +10,16 @@ export const useRequest = (path) => {
       auth: token,
     },
   };
-  const getData = async () => {
-    try {
-      const resp = await axios.get(BaseUrl + path, header);
-      setData(resp.data);
-      // console.log(resp.data);
-    } catch (err) {
-      console.log(err);
-    }
+  const getData = () => {
+    axios
+      .get(BaseUrl + path, header)
+      .then((res) => {
+        setData(res.data);
+        // console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return [data, getData];
