@@ -6,6 +6,7 @@ import useForm from "../../hook/useForm";
 import { usePlaceOrder } from "../../hook/usePlaceOrder";
 import { HeaderPage } from "../../components/Header/HeaderPage";
 import useProtectedPage from "../../hook/useProtectedPage ";
+import { useRequest } from "../../hook/useRequest";
 
 const Cart = () => {
   useProtectedPage()
@@ -18,6 +19,8 @@ const Cart = () => {
   const retrievedCart = localStorage.getItem("cart");
 
   const cartItems = JSON.parse(retrievedCart);
+
+  const [addressProfile, getAdress] = useRequest("rappi4A/profile/address")
 
   const onChoosePaymentMethod = (e) => {
     e.preventDefault();
@@ -74,10 +77,25 @@ const Cart = () => {
     renderiza();
     // eslint-disable-next-line
   }, [cartItems]);
+  
+  useEffect(() => {
+    getAdress()
+  },[])
+
+  const address = addressProfile.address
+
 
   return (
     <div>
       <HeaderPage />
+      <div>
+        <h4>Endereço de Entrega:</h4>
+        <p>Rua {address && address.street}</p>
+        <p> N° {address && address.number} - {address && address.complement}</p>
+        <p>Bairro: {address && address.neighbourhood}</p>
+        <p>Cidade: {address && address.city}</p>
+      </div>
+
       <button onClick={limparCarrinho}>Esvaziar carrinho</button>
 
       <Container>{cart.length ? renderiza() : <p>Carrinho Vazio</p>}</Container>
