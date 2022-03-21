@@ -46,10 +46,8 @@
 <h3>Abaixo você pode conferir algumas imagens do nosso projeto:</h3>
 
 
-
-
-
-
+![cadastro](https://user-images.githubusercontent.com/85260996/159298604-a54a2a27-378c-47c4-bc29-248f778a1afe.PNG)
+![tela-login](https://user-images.githubusercontent.com/85260996/159298619-928120bf-20db-459e-b832-35fb94728c66.PNG)
 
 
 
