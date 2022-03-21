@@ -6,17 +6,8 @@ import { useNavigate } from "react-router-dom";
 import { HeaderPage } from "../../components/Header/HeaderPage";
 import useProtectedPage from "../../hook/useProtectedPage ";
 import useForm from "../../hook/useForm";
+import { Img, Main }    from './styled'
 
-const Main = styled.div`
-  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
-    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
-    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
-  width: 400px;
-`;
-const Img = styled.img`
-  width: 100px;
-  height: 100px;
-`;
 
 const Feed = () => {
   useProtectedPage();
