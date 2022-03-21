@@ -24,9 +24,10 @@ const Feed = () => {
 
   const { restaurants, setRestaurants } = useContext(GlobalContext);
 
-  const { form, onChangeForm, clearForm } = useForm({ pesquisar: ""});
-
-  const [restaurante, setRestaurante] = useState("")
+  const { form, onChangeForm, clearForm } = useForm({
+    pesquisar: "",
+    category: "",
+  });
 
   const GetRestaurants = () => {
     const token = localStorage.getItem("token");
@@ -54,20 +55,33 @@ const Feed = () => {
   }, []);
 
   const pesquisar = (event) => {
-    event.preventDefault()
-    clearForm()
-    setRestaurante(form.pesquisar)
-  }
-
-  const getRest = restaurants.filter(
-    rest => {
-      return rest.name.toLowerCase().includes(restaurante.toLowerCase())
-    })
-    
-  const goBack = () => {
-    setRestaurante("")
-  }
-
+    event.preventDefault();
+    clearForm();
+  };
+  const filterRests = () =>
+    restaurants
+      .filter((rest) => {
+        return rest.name.toLowerCase().includes(form.pesquisar.toLowerCase());
+      })
+      .filter((rest) => {
+        return rest.category
+          .toLowerCase()
+          .replace("á", "a")
+          .includes(form.category.toLowerCase());
+      })
+      .map(({ id, name, category, address, deliveryTime, logoUrl }) => {
+        return (
+          <Main key={id}>
+            <button onClick={() => navigate(`/menu/${id}`)}>
+              <Img src={logoUrl} />
+            </button>
+            <h2>{name}</h2>
+            <p>{category}</p>
+            <p>{deliveryTime} min</p>
+            <p>{address}</p>
+          </Main>
+        );
+      });
   return (
     <div>
       <HeaderPage />
@@ -76,39 +90,17 @@ const Feed = () => {
           name="pesquisar"
           value={form.pesquisar}
           onChange={onChangeForm}
-          placeholder={"Pesquisar"}
+          placeholder={"Pesquisar por nome"}
         />
-        </form>
-      {!restaurante && restaurants.map(
-        ({ id, name, category, address, deliveryTime, logoUrl }) => {
-          return (
-            <Main key={id}>
-              <button onClick={() => navigate(`/menu/${id}`)}>
-                <Img src={logoUrl} />
-              </button>
-              <h2>{name}</h2>
-              <p>{category}</p>
-              <p>{deliveryTime} min</p>
-              <p>{address}</p>
-            </Main>
-          );
-        }
-      )}
-      {restaurante && getRest.length === 1 && getRest.map(({ id, name, category, address, deliveryTime, logoUrl }) => {
-          return (
-            <Main key={id}>
-              <button onClick={() => navigate(`/menu/${id}`)}>
-                <Img src={logoUrl} />
-              </button>
-              <h2>{name}</h2>
-              <p>{category}</p>
-              <p>{deliveryTime} min</p>
-              <p>{address}</p>
-              <button onClick={goBack}>Voltar</button>
-            </Main>
-          );
-        })}
-        {restaurante && getRest.length === 0 && <div><p>Restaurante não encontrado.</p> <button onClick={goBack}>Voltar</button></div>}
+        <input
+          name="category"
+          value={form.category}
+          onChange={onChangeForm}
+          placeholder={"Pesquisar por categoria"}
+        />
+      </form>
+      {filterRests()}
+      {/* {restaurante ? <p>Restaurante não encontrado.</p> : filterRests()} */}
     </div>
   );
 };
