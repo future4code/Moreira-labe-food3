@@ -6,17 +6,8 @@ import { useNavigate } from "react-router-dom";
 import { HeaderPage } from "../../components/Header/HeaderPage";
 import useProtectedPage from "../../hook/useProtectedPage ";
 import useForm from "../../hook/useForm";
+import { Img, Main }    from './styled'
 
-const Main = styled.div`
-  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
-    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
-    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
-  width: 400px;
-`;
-const Img = styled.img`
-  width: 100px;
-  height: 100px;
-`;
 
 const Feed = () => {
   useProtectedPage();
@@ -24,9 +15,10 @@ const Feed = () => {
 
   const { restaurants, setRestaurants } = useContext(GlobalContext);
 
-  const { form, onChangeForm, clearForm } = useForm({ pesquisar: ""});
-
-  const [restaurante, setRestaurante] = useState("")
+  const { form, onChangeForm, clearForm } = useForm({
+    pesquisar: "",
+    category: "",
+  });
 
   const GetRestaurants = () => {
     const token = localStorage.getItem("token");
@@ -54,20 +46,31 @@ const Feed = () => {
   }, []);
 
   const pesquisar = (event) => {
-    event.preventDefault()
-    clearForm()
-    setRestaurante(form.pesquisar)
-  }
-
-  const getRest = restaurants.filter(
-    rest => {
-      return rest.name.toLowerCase().includes(restaurante.toLowerCase())
-    })
-    
-  const goBack = () => {
-    setRestaurante("")
-  }
-
+    event.preventDefault();
+    clearForm();
+  };
+  const filterRests = () =>
+    restaurants
+      .filter((rest) => {
+        return rest.name.toLowerCase().includes(form.pesquisar.toLowerCase());
+      })
+      .filter((rest) => {
+        return rest.category
+          .toLowerCase()
+          .replace("á", "a")
+          .includes(form.category.toLowerCase());
+      })
+      .map(({ id, name, category, address, deliveryTime, logoUrl }) => {
+        return (
+          <Main key={id} onClick={() => navigate(`/menu/${id}`)}>
+            <Img src={logoUrl} />
+            <h2>{name}</h2>
+            <p>{category}</p>
+            <p>{deliveryTime} min</p>
+            <p>{address}</p>
+          </Main>
+        );
+      });
   return (
     <div>
       <HeaderPage />
@@ -76,41 +79,20 @@ const Feed = () => {
           name="pesquisar"
           value={form.pesquisar}
           onChange={onChangeForm}
-          placeholder={"Pesquisar"}
+          placeholder={"Pesquisar por nome"}
         />
-        </form>
-      {!restaurante && restaurants.map(
-        ({ id, name, category, address, deliveryTime, logoUrl }) => {
-          return (
-            <Main key={id}>
-              <button onClick={() => navigate(`/menu/${id}`)}>
-                <Img src={logoUrl} />
-              </button>
-              <h2>{name}</h2>
-              <p>{category}</p>
-              <p>{deliveryTime} min</p>
-              <p>{address}</p>
-            </Main>
-          );
-        }
-      )}
-      {restaurante && getRest.length === 1 && getRest.map(({ id, name, category, address, deliveryTime, logoUrl }) => {
-          return (
-            <Main key={id}>
-              <button onClick={() => navigate(`/menu/${id}`)}>
-                <Img src={logoUrl} />
-              </button>
-              <h2>{name}</h2>
-              <p>{category}</p>
-              <p>{deliveryTime} min</p>
-              <p>{address}</p>
-              <button onClick={goBack}>Voltar</button>
-            </Main>
-          );
-        })}
-        {restaurante && getRest.length === 0 && <div><p>Restaurante não encontrado.</p> <button onClick={goBack}>Voltar</button></div>}
-    </div>
-  );
-};
+        <input
+          name="category"
+          value={form.category}
+          onChange={onChangeForm}
+          placeholder={"Pesquisar por categoria"}
+        />
+      </form>
+      {filterRests()}
+      {/* {restaurante ? <p>Restaurante não encontrado.</p> : filterRests()} */}
+      </div>
+      );
+    };
+    
+    export default Feed;
 
-export default Feed;
