@@ -49,10 +49,8 @@ const Login = () => {
 
         if (hasAddress === true) {
           navigate("/feed");
-          console.log(response.data);
         } else {
           navigate("/address");
-          console.log(response.data);
         }
       })
       .catch((error) => {
