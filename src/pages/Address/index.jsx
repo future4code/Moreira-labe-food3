@@ -4,9 +4,11 @@ import usePutChangeAddress from "../../hook/usePutChangeAddress";
 import { useNavigate } from "react-router-dom";
 import Header from "../../components/Header";
 import { Container, H3, ContainerBut, ContainerBack, Form, Input, Button, ButtonBack } from "./styled";
+import useProtectedPage from "../../hook/useProtectedPage ";
 
 
 const Address = () => {
+  useProtectedPage()
   const navigate = useNavigate();
   const goTo = () => {
     navigate("/feed");

@@ -2,10 +2,12 @@ import axios from "axios";
 import React, { useContext, useEffect } from "react";
 import styled from "styled-components";
 import { GlobalContext } from "../../Global/GlobalContext";
-import { header } from "../../constants/constants";
+import { BaseUrl } from "../../constants/constants";
 import { useRequest } from "../../hook/useRequest";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { HeaderPage } from "../../components/Header/HeaderPage";
+import useProtectedPage from "../../hook/useProtectedPage ";
 const Main = styled.div`
   box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
     rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
@@ -14,6 +16,7 @@ const Main = styled.div`
 `;
 
 const Profile = () => {
+  useProtectedPage();
   const [pedidos, setPedidos] = useState([]);
 
   const { profile, setProfile, address, SetAddress } =
@@ -27,17 +30,20 @@ const Profile = () => {
     setProfile(data.user);
     getData();
     getAdress();
+    // eslint-disable-next-line
   }, [pedidos]);
-  // console.log(address);
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
+    const header = {
+      headers: {
+        auth: token,
+      },
+    };
     axios
-      .get(
-        "https://us-central1-missao-newton.cloudfunctions.net/rappi4A/orders/history",
-        header
-      )
-      .then((response) => {
-        setPedidos(response.data.orders);
+      .get(BaseUrl + "rappi4A/orders/history", header)
+      .then((res) => {
+        setPedidos(res.data.orders);
       })
       .catch((error) => {
         alert(error.response);
@@ -50,30 +56,38 @@ const Profile = () => {
 
   return (
     <div>
-      <button onClick={() => navigate("/feed")}>voltar</button>
-      <button onClick={() => navigate("/address")}>Editar Endereço</button>
-      <button onClick={() => navigate("/editar")}>Editar Perfil</button>
-      <Main>
-        <p>Usuário: {profile?.name}</p>
-        <p>E-mail: {profile?.email}</p>
-        <p>CPF: {profile?.cpf}</p>
-      </Main>
-      <Main>
-        <p>Rua: {address?.street}</p>
-        <p>
-          N° {address?.number} - {address?.complement}
-        </p>
-        <p>Bairro: {address?.neighbourhood}</p>
-        <p>Cidade: {address?.city}</p>
-        <p>Estado: {address?.state}</p>
-      </Main>
-      <Main>
-        Histórico de pedidos:
-        <br />
-        {listaDePedidos.length > 0
-          ? listaDePedidos
-          : "Você ainda não fez nenhum pedido."}
-      </Main>
+      <HeaderPage />
+      <br />
+      {profile && address ? (
+        <>
+          <button onClick={() => navigate("/editar")}>Editar Perfil</button>
+          <Main>
+            <h4>Perfil:</h4>
+            <p>Usuário: {profile?.name}</p>
+            <p>E-mail: {profile?.email}</p>
+            <p>CPF: {profile?.cpf}</p>
+          </Main>
+          <button onClick={() => navigate("/address")}>Editar Endereço</button>
+          <Main>
+            <h4>Endereço:</h4>
+            <p>Rua: {address?.street}</p>
+            <p>
+              N° {address?.number} - {address?.complement}
+            </p>
+            <p>Bairro: {address?.neighbourhood}</p>
+            <p>Cidade: {address?.city}</p>
+            <p>Estado: {address?.state}</p>
+          </Main>
+          <Main>
+            <h4>Histórico de pedidos: </h4>
+            {listaDePedidos.length > 0
+              ? listaDePedidos
+              : "Você ainda não fez nenhum pedido."}
+          </Main>
+        </>
+      ) : (
+        <p>Carregando...</p>
+      )}
     </div>
   );
 };

@@ -8,6 +8,7 @@ const GlobalState = (props) => {
   const [produtos, setProdutos] = useState([]);
   const [profile, setProfile] = useState([]);
   const [address, SetAddress] = useState([]);
+  const [restaurantId, setRestaurantId] = useState("");
 
   return (
     <GlobalContext.Provider
@@ -24,6 +25,8 @@ const GlobalState = (props) => {
         setCart,
         produtos,
         setProdutos,
+        restaurantId,
+        setRestaurantId,
       }}
     >
       {props.children}

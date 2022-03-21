@@ -9,7 +9,7 @@ import Profile from "./pages/Profile";
 import Signup from "./pages/SignUp";
 import EditarPerfil from "./pages/EditarPerfil";
 import Menu from "./pages/RestauranteMenu";
-import HistoricoDePedidos from "./pages/Historico";
+import PedidoEmAndamento from "./pages/PedidoEmAndamento";
 
 const RoutesApp = () => {
   return (
@@ -23,7 +23,7 @@ const RoutesApp = () => {
         <Route path="/cart" element={<Cart />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/editar" element={<EditarPerfil />} />
-        <Route path="/historico" element={<HistoricoDePedidos />} />
+        <Route path="/pedido" element={<PedidoEmAndamento />} />
         <Route path="/menu/:id" element={<Menu />} />
       </Routes>
     </BrowserRouter>

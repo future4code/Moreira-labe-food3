@@ -1,6 +1,5 @@
-import { useEffect } from "react"
-import { useNavigate } from "react-router-dom"
-
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const useProtectedPage = () => {
   const Navigate = useNavigate();
@@ -16,7 +15,8 @@ const useProtectedPage = () => {
 
   useEffect(() => {
     protect();
-  }, [protect()]);
+    // eslint-disable-next-line
+  }, []);
 };
 
-export default useProtectedPage; 
+export default useProtectedPage;

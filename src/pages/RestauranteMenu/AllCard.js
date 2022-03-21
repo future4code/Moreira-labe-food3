@@ -4,7 +4,7 @@ import { quantidade } from "../../constants/quantidade";
 import styled from "styled-components";
 import { GlobalContext } from "../../Global/GlobalContext";
 import { useState } from "react";
-
+import { useParams } from "react-router-dom";
 
 const Main = styled.div`
   box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
@@ -18,8 +18,9 @@ const Img = styled.img`
 `;
 
 export default function AllCard(props) {
-  const { form, onChangeForm, clearForm } = useForm({ quantidade: "" });
-  const { cart, setCart } = useContext(GlobalContext);
+  const { id } = useParams();
+  const { form, onChangeForm, clearForm } = useForm({ quantity: "" });
+  const { cart, setCart, setRestaurantId } = useContext(GlobalContext);
   const [inCart, setInCart] = useState(false);
   const onChange = (e) => {
     e.preventDefault();
@@ -29,7 +30,7 @@ export default function AllCard(props) {
   const produto = {
     name: props.name,
     id: props.id,
-    quantidade: form.quantidade,
+    quantity: form.quantity,
     foto: props.photoUrl,
     preco: props.price,
   };
@@ -37,6 +38,7 @@ export default function AllCard(props) {
   const adicionarAoCarrinho = (produto) => {
     const novoCarrinho = [...cart];
     setInCart(true);
+    setRestaurantId(id);
     const listaCarrinho = novoCarrinho.find((item) => produto.id === item.id);
 
     if (listaCarrinho) {
@@ -61,8 +63,8 @@ export default function AllCard(props) {
           ) : (
             <form onSubmit={onChange}>
               <select
-                value={form.quantidade}
-                name={"quantidade"}
+                value={form.quantity}
+                name={"quantity"}
                 onChange={onChangeForm}
                 required
               >
@@ -82,31 +84,10 @@ export default function AllCard(props) {
               </button>
             </form>
           )}
-          {/* <form onSubmit={onChange}>
-          <select
-            value={form.quantidade}
-            name={"quantidade"}
-            onChange={onChangeForm}
-            required
-          >
-            <option value={""} disabled>
-              Quantidade
-            </option>
-            {quantidade.map((quant, index) => {
-              return <option key={index}>{quant}</option>;
-            })}
-          </select>
-          <span>{props.category}</span>{" "}
-          <button onClick={() => adicionarAoCarrinho(produto)} type="submit">
-            Adicionar
-          </button>
-          {form.quantidade}
-        </form> */}
         </Main>
         <p>{props.description}</p>
         <p>R$ {props.price}</p>
-        <p>Quantidade: {form.quantidade ? form.quantidade : 0}</p>
-        
+        <p>Quantidade: {form.quantity ? form.quantity : 0}</p>
       </div>
     </>
   );
