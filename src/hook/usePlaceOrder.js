@@ -28,7 +28,6 @@ export const usePlaceOrder = (cartProd, formInfo, id) => {
         setCart([]);
         alert(`Pedido realizado com sucesso!`);
         navigate("/pedido");
-        console.log(res.data);
       })
       .catch((err) => {
         if (hasOrder) {

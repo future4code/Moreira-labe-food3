@@ -1,22 +1,46 @@
 import styled from 'styled-components'
 
+export const Container = styled.div`
+    display: flex;
+    justify-content: center;
+    margin-top:15px ;
+`
 export const Main = styled.div`
     width: 80%;
-    border: 1px solid;
-    width: 400px;
-`
-export const Input = styled.input`
-    border: 1px solid #FF3B30;
+    margin: 10px;
     width: 80%;
-    height: 30px;
-    margin-bottom: 10px;
-    border-radius: 5px;
+    background-color: #FF3B30;
+    border-radius: 10px;
 `
 export const Img = styled.img`
-  width: 80%;
-  //height: 100px;
+    width: 100%;
+    border-radius: 10px 10px 0px 0px;
 `
 export const Form = styled.form`
     display: flex;
     justify-content: center;
+`
+export const FormSearch = styled.form`
+    display: flex;
+    justify-content: center;
+`
+export const Description = styled.div`
+    margin: 0px 7px;
+`
+export const Inputs = styled.input`
+    border: 1px solid #FF3B30;
+    width: 40%;
+    height: 25px;
+    margin: 5px;
+    border-radius: 5px;
+`
+export const Time = styled.p`
+    color: white;
+`
+export const Data = styled.div`
+    display: flex;
+    justify-content:space-between;
+`
+export const Category = styled.p`
+    color: black;
 `
