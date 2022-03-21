@@ -80,6 +80,7 @@ const Cart = () => {
   
   useEffect(() => {
     getAdress()
+    //eslint-disable-next-line
   },[])
 
   const address = addressProfile.address

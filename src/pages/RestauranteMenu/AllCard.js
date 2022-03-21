@@ -59,7 +59,7 @@ export default function AllCard(props) {
         <h2>{props.name}</h2> <Img src={props.photoUrl} /> <br />
         <Main>
           {inCart ? (
-            <button>Deletar</button>
+            ""
           ) : (
             <form onSubmit={onChange}>
               <select
