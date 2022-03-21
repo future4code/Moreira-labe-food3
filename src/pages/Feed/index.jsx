@@ -1,10 +1,12 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { GlobalContext } from "../../Global/GlobalContext";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { HeaderPage } from "../../components/Header/HeaderPage";
 import useProtectedPage from "../../hook/useProtectedPage ";
+import useForm from "../../hook/useForm";
+
 const Main = styled.div`
   box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
     rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
@@ -22,6 +24,10 @@ const Feed = () => {
 
   const { restaurants, setRestaurants } = useContext(GlobalContext);
 
+  const { form, onChangeForm, clearForm } = useForm({ pesquisar: ""});
+
+  const [restaurante, setRestaurante] = useState("")
+
   const GetRestaurants = () => {
     const token = localStorage.getItem("token");
 
@@ -35,7 +41,6 @@ const Feed = () => {
         }
       )
       .then((res) => {
-        console.log(res.data.restaurants);
         setRestaurants(res.data.restaurants);
       })
       .catch((err) => {
@@ -48,10 +53,33 @@ const Feed = () => {
     // eslint-disable-next-line
   }, []);
 
+  const pesquisar = (event) => {
+    event.preventDefault()
+    clearForm()
+    setRestaurante(form.pesquisar)
+  }
+
+  const getRest = restaurants.filter(
+    rest => {
+      return rest.name.toLowerCase().includes(restaurante.toLowerCase())
+    })
+    
+  const goBack = () => {
+    setRestaurante("")
+  }
+
   return (
     <div>
       <HeaderPage />
-      {restaurants.map(
+      <form onSubmit={pesquisar}>
+        <input
+          name="pesquisar"
+          value={form.pesquisar}
+          onChange={onChangeForm}
+          placeholder={"Pesquisar"}
+        />
+        </form>
+      {!restaurante && restaurants.map(
         ({ id, name, category, address, deliveryTime, logoUrl }) => {
           return (
             <Main key={id}>
@@ -66,6 +94,21 @@ const Feed = () => {
           );
         }
       )}
+      {restaurante && getRest.length === 1 && getRest.map(({ id, name, category, address, deliveryTime, logoUrl }) => {
+          return (
+            <Main key={id}>
+              <button onClick={() => navigate(`/menu/${id}`)}>
+                <Img src={logoUrl} />
+              </button>
+              <h2>{name}</h2>
+              <p>{category}</p>
+              <p>{deliveryTime} min</p>
+              <p>{address}</p>
+              <button onClick={goBack}>Voltar</button>
+            </Main>
+          );
+        })}
+        {restaurante && getRest.length === 0 && <div><p>Restaurante não encontrado.</p> <button onClick={goBack}>Voltar</button></div>}
     </div>
   );
 };
