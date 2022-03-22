@@ -85,8 +85,8 @@ const Feed = () => {
               Cozinhas
             </option>
             <option value={""}>Todas as categorias</option>
-            {restaurants.map(({ category }) => {
-              return <option>{category}</option>;
+            {restaurants.map(({ category },index) => {
+              return <option key={index}>{category}</option>;
             })}
           </Select>
         </FormSearch>
